@@ -1,0 +1,7 @@
+project_id = "fradntfmqosuboqmsekq"
+
+[functions.extract-skills]
+verify_jwt = false
+
+[functions.rank-candidates]
+verify_jwt = false
