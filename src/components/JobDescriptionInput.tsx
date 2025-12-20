@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ExtractedSkills {
   required: string[];
@@ -22,24 +24,50 @@ export function JobDescriptionInput({ onSubmit, isProcessing }: JobDescriptionIn
   const [description, setDescription] = useState("");
   const [extractedSkills, setExtractedSkills] = useState<ExtractedSkills | null>(null);
   const [isExtracting, setIsExtracting] = useState(false);
+  const { toast } = useToast();
 
   const handleExtractSkills = async () => {
     if (!description.trim()) return;
     
     setIsExtracting(true);
     
-    // Simulate AI extraction - in production this would call the AI endpoint
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Mock extracted skills based on description
-    const mockSkills: ExtractedSkills = {
-      required: ["Python", "Machine Learning", "TensorFlow", "Data Analysis", "SQL"],
-      preferred: ["Docker", "Kubernetes", "AWS", "REST APIs"],
-      keywords: ["5+ years experience", "Senior level", "Team leadership", "Agile"],
-    };
-    
-    setExtractedSkills(mockSkills);
-    setIsExtracting(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('extract-skills', {
+        body: { jobDescription: description }
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      setExtractedSkills(data.skills);
+      toast({
+        title: "Skills Extracted",
+        description: "AI has analyzed the job description and extracted key requirements.",
+      });
+    } catch (error) {
+      console.error('Error extracting skills:', error);
+      
+      // Fallback to basic extraction
+      const words = description.toLowerCase();
+      const techKeywords = ['python', 'javascript', 'react', 'sql', 'aws', 'docker', 'kubernetes', 'machine learning', 'ml', 'ai', 'data', 'api', 'node', 'typescript', 'java', 'c++', 'tensorflow', 'pytorch'];
+      const found = techKeywords.filter(kw => words.includes(kw));
+      
+      const fallbackSkills: ExtractedSkills = {
+        required: found.slice(0, 5).length > 0 ? found.slice(0, 5) : ['Technical Skills', 'Problem Solving'],
+        preferred: found.slice(5, 8).length > 0 ? found.slice(5, 8) : ['Communication', 'Teamwork'],
+        keywords: ['Experience required', 'Professional level']
+      };
+      
+      setExtractedSkills(fallbackSkills);
+      toast({
+        title: "Using Basic Extraction",
+        description: "Could not reach AI service. Using keyword-based extraction.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExtracting(false);
+    }
   };
 
   const handleSubmit = () => {
