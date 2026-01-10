@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+URL: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-## Project info
+📋 Project Report: Intelligent Resume Screening System
+🎯 Project Overview
+A production-grade, AI-powered resume screening platform that uses semantic matching to rank candidates against job descriptions—moving beyond simple keyword matching to understand contextual relationships between skills.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+🛠️ Technology Stack
+Layer	Technology	Why We Chose It
+Frontend Framework	React 18 + TypeScript	Type-safe, component-based architecture for maintainable UI
+Build Tool	Vite	Lightning-fast HMR, optimized production builds
+Styling	Tailwind CSS + shadcn/ui	Utility-first CSS with accessible, customizable components
+State Management	TanStack React Query	Server state caching, automatic refetching, optimistic updates
+Routing	React Router DOM	Client-side navigation with nested routes
+Backend	Lovable Cloud (Supabase Edge Functions)	Serverless, auto-scaling, no infrastructure management
+AI Model	Google Gemini 2.5 Flash	Fast, cost-effective, excellent at structured extraction
+API Style	REST via Edge Functions	UI-ready, cloud-deployable, microservice-friendly
+🧠 AI Architecture
+Function	Purpose	Model
+extract-skills	Parses job descriptions → required skills, preferred skills, keywords	Gemini 2.5 Flash
+rank-candidates	Semantic matching of resumes against JD, returns ranked candidates	Gemini 2.5 Flash
+Why Semantic Matching over Keywords?
 
-## How can I edit this code?
+Keywords fail: "ML Engineer" ≠ "Machine Learning Specialist" (keyword mismatch)
+Embeddings succeed: AI understands contextual equivalence
+Uses function calling (structured JSON output) for reliable parsing
+🎨 Design System
+Element	Implementation
+Typography	Sora (headings) + Inter (body)
+Color Palette	Deep Indigo primary (#4338ca), Emerald accent (#10b981)
+UI Pattern	Glassmorphism with backdrop blur, gradient accents
+Components	Custom variants: glass, gradient, accent for cards, buttons, badges
+📁 Project Structure
+src/
+├── components/        # UI components (Header, CandidateCard, FileUploadZone...)
+├── hooks/             # Custom hooks (useResumeScreening)
+├── pages/             # Route pages (Index, NotFound)
+├── types/             # TypeScript interfaces (Resume, CandidateRanking...)
+├── integrations/      # Supabase client (auto-generated)
+└── lib/               # Utilities
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+supabase/functions/
+├── extract-skills/    # JD parsing endpoint
+└── rank-candidates/   # Semantic ranking endpoint
+🔑 Key Features Implemented
+Multi-file resume upload with drag-and-drop
+AI-powered skill extraction from job descriptions
+Semantic candidate ranking with match percentages
+Real-time processing overlay with step indicators
+Responsive glass-morphism UI
+🚀 Production-Ready Aspects
+✅ REST API architecture (/extract-skills, /rank-candidates)
+✅ Error handling (rate limits, API failures)
+✅ CORS configured for web clients
+✅ TypeScript end-to-end
+✅ SEO meta tags configured
