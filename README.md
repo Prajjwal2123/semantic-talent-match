@@ -1,4 +1,4 @@
-URL: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+URL: [https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID](https://lovable.dev/projects/fd5623c5-bc77-4fc6-a69b-07a5a4bd1cf9)
 
 📋 Project Report: Intelligent Resume Screening System
 🎯 Project Overview
